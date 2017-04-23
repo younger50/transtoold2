@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+	var dic = {
+		"Maximum Damage":"大傷",
+		"Attack Rating":"準",
+		"Life":"命"
+	};
+	console.log(dic);
+	function maintrans(){
+		//$("#textoutput").text(""+$("#textinput").text());
+		var txt = $("#textinput").val();
+		
+		//trans by dictionary replace
+		for(var key in dic){
+			txt = txt.replace(new RegExp(key,"g"), dic[key]);
+		}
+		console.log(txt);
+		
+		//find "+V to N" line, also keep empty line
+		var mtxt = txt.match( new RegExp("^([^ ]*[0-9][^ ]* to .*|)$","gm"));
+		console.log(mtxt);
+		
+		//merge 1 result to 1 line for output
+		var otxt = "";
+		for(i = 0; i < mtxt.length; i++){
+			line = mtxt[i];
+			if(line == ""){
+				otxt+="\n";
+			}
+			else{
+				vk = line.split(" to ");
+				otxt+=vk[0]+vk[1];
+			}
+		}
+		console.log(otxt);
+		
+		$("#textoutput").val(otxt);
+	}
+	
+	function dicdisplay(){
+	 $("#dicdisplay").text("");
+		for(var key in dic){
+		 $("#dicdisplay").append(key+" → "+dic[key]+"</br>");
+		}
+	}
+	
+	$(document).ready(function(){
+	 dicdisplay();
+		$("#btn1").click( function(){
+			maintrans();
+		});
+		$("#dadd").click( function(){
+			dic[$("#d1").val()] = $("#d2").val();
+			dicdisplay();
+		});
+		$("#ddel").click( function(){
+			delete dic[$("#d1").val()];
+			dicdisplay();
+		});
+	});
+</script>
+
+<div>
+<h4>Translate</h4>
+<textarea id="textinput" rows="10" cols="50">
+Magic Sharp Grand Charm of Sustenance
+Keep in Inventory to Gain Bonus
+Required Level: 53
++10 to Maximum Damage
++68 to Attack Rating
++35 to Life
+Skin: Dragon
+Ilvl: 86
+</textarea>
+<button id="btn1" type="button">Translate</button>
+<textarea id="textoutput" rows="10" cols="50">
+10大傷68準35命
+</textarea>
+</div>
+
+<div>
+<h4>Dictionary</h4>
+<input id="d1">
+<input id="d2">
+</br>
+<button id="dadd">Add</button>
+<button id="ddel">Delete</button>
+<div id="dicdisplay">
+</div>
+</div>
+
+</body>
+</html>
