@@ -14,16 +14,10 @@
 	console.log(dic);
 	function maintrans(){
 		//$("#textoutput").text(""+$("#textinput").text());
-		var txt = $("#textinput").val();
+				var txt = $("#textinput").val();
 		
-		//trans by dictionary replace
-		for(var key in dic){
-			txt = txt.replace(new RegExp(key,"g"), dic[key]);
-		}
-		console.log(txt);
-		
-		//find "+V to N" line, also keep empty line
-		var mtxt = txt.match( new RegExp("^([^ ]*[0-9][^ ]* to .*|)$","gm"));
+		//find "+V N" line, also keep empty line
+		var mtxt = txt.match( new RegExp("^(.*[0-9]+.*|)$","gm"));
 		console.log(mtxt);
 		
 		//merge 1 result to 1 line for output
@@ -34,8 +28,19 @@
 				otxt+="\n";
 			}
 			else{
-				vk = line.split(" to ");
-				otxt+=vk[0]+vk[1];
+				//trans by dictionary replace
+				var mf = 0;
+				var key;
+	  	for(key in dic){
+	  	 if(line.includes(key)){
+	  	  mf++;
+	  	  mv = line.match( new RegExp("[0-9]+"));
+	  	  break;
+	  	 }
+		  }
+	  	if(mf>0){
+				 otxt+=mv+dic[key];
+				}
 			}
 		}
 		console.log(otxt);
