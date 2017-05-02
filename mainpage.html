@@ -69,9 +69,20 @@
 			delete dic[$("#d1").val()];
 			dicdisplay();
 		});
+		$("#dex").click( function(){
+		 	 $("#dicio").text( JSON.stringify(dic));
+		});
+		$("#dsl").click( function(){
+		 	 $("#dicio").focus();
+		 	 $("#dicio").select();
+		});
+		$("#dim").click( function(){
+		 	 dic = JSON.parse( $("#dicio").val());
+		 	 dicdisplay();
+		});
 	});
 </script>
-
+	
 <div>
 <h4>Translate</h4>
 <textarea id="textinput" rows="10" cols="50">
@@ -92,12 +103,20 @@ Ilvl: 86
 
 <div>
 <h4>Dictionary</h4>
-<input id="d1">
+<input id="d1">→
 <input id="d2">
 </br>
 <button id="dadd">Add</button>
 <button id="ddel">Delete</button>
 <div id="dicdisplay">
+</div></br>
+<div>
+<h4>Save/Load</h4>
+<textarea id="dicio" rows="5" cols="50">
+</textarea></br>
+<button id="dex">Save</button>
+<button id="dsl">Select</button>
+<button id="dim">Load</button>
 </div>
 </div>
 
